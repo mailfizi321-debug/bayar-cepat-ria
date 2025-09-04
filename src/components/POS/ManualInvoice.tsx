@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Plus, Trash2, Receipt as ReceiptIcon, CreditCard, Percent, Printer, Copy, Bluetooth } from 'lucide-react';
 import { Receipt as ReceiptType, Product } from '@/types/pos';
 import { toast } from 'sonner';
-import { hybridThermalPrinter } from '@/lib/hybrid-thermal-printer';
+import { bluetoothPrinter } from '@/lib/bluetooth-printer';
 import { formatThermalReceipt } from '@/lib/receipt-formatter';
 
 interface ManualItem {
@@ -206,7 +206,7 @@ export const ManualInvoice = ({ onCreateInvoice, formatPrice, receipts, onPrintR
   const handleConnectBluetooth = async () => {
     setIsConnecting(true);
     try {
-      const connected = await hybridThermalPrinter.connect();
+      const connected = await bluetoothPrinter.connect();
       setIsBluetoothConnected(connected);
       if (connected) {
         toast.success('Bluetooth printer berhasil terhubung!');
@@ -233,7 +233,7 @@ export const ManualInvoice = ({ onCreateInvoice, formatPrice, receipts, onPrintR
 
     try {
       const receiptText = formatThermalReceipt(receipt, formatPrice);
-      const printed = await hybridThermalPrinter.print(receiptText);
+      const printed = await bluetoothPrinter.print(receiptText);
       
       if (printed) {
         toast.success('Nota berhasil dicetak!');
@@ -252,7 +252,7 @@ export const ManualInvoice = ({ onCreateInvoice, formatPrice, receipts, onPrintR
 
     try {
       // Connect to thermal printer
-      const connected = await hybridThermalPrinter.connect();
+      const connected = await bluetoothPrinter.connect();
       if (!connected) {
         toast.error('Gagal terhubung ke printer thermal');
         return;
@@ -260,7 +260,7 @@ export const ManualInvoice = ({ onCreateInvoice, formatPrice, receipts, onPrintR
 
       // Format and print receipt
       const receiptText = formatThermalReceipt(receipt, formatPrice);
-      const printed = await hybridThermalPrinter.print(receiptText);
+      const printed = await bluetoothPrinter.print(receiptText);
       
       if (printed) {
         toast.success('Nota berhasil dicetak!');

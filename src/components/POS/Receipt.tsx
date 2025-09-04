@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Printer, Download, Bluetooth, ArrowLeft } from 'lucide-react';
-import { hybridThermalPrinter } from '@/lib/hybrid-thermal-printer';
+import { bluetoothPrinter } from '@/lib/bluetooth-printer';
 import { formatThermalReceipt, formatPrintReceipt, formatMobileA4PrintReceipt } from '@/lib/receipt-formatter';
 import { toast } from 'sonner';
 import { BluetoothInstructions } from './BluetoothInstructions';
@@ -50,9 +50,9 @@ export const Receipt = ({ receipt, formatPrice, onBack }: ReceiptProps) => {
 
   const handleConnectPrinter = async () => {
     try {
-      const connected = await hybridThermalPrinter.connect();
+      const connected = await bluetoothPrinter.connect();
       if (connected) {
-        toast.success(`Printer ${hybridThermalPrinter.getPlatformInfo()} terhubung!`);
+        toast.success(`Printer ${bluetoothPrinter.getPlatform()} terhubung!`);
       } else {
         toast.error('Gagal menghubungkan printer bluetooth.');
       }

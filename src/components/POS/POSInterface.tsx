@@ -34,7 +34,7 @@ import {
   BluetoothConnected
 } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
-import { thermalPrinter } from '@/lib/thermal-printer';
+import { bluetoothPrinter } from '@/lib/bluetooth-printer';
 import { useToast } from '@/hooks/use-toast';
 
 export const POSInterface = () => {
@@ -110,7 +110,7 @@ export const POSInterface = () => {
 
   const handleBluetoothConnect = async () => {
     try {
-      const success = await thermalPrinter.connect();
+      const success = await bluetoothPrinter.connect();
       if (success) {
         setBluetoothConnected(true);
         toast({
@@ -134,7 +134,7 @@ export const POSInterface = () => {
   };
 
   const handleBluetoothDisconnect = () => {
-    thermalPrinter.disconnect();
+    bluetoothPrinter.disconnect();
     setBluetoothConnected(false);
     toast({
       title: "Bluetooth Terputus",

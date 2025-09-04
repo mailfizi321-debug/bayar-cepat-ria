@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ShoppingCart as CartIcon, Trash2, CreditCard, Percent, Printer, Edit, ExternalLink, Bluetooth, Plus } from 'lucide-react';
-import { hybridThermalPrinter } from '@/lib/hybrid-thermal-printer';
+import { bluetoothPrinter } from '@/lib/bluetooth-printer';
 import { formatThermalReceipt } from '@/lib/receipt-formatter';
 import { toast } from 'sonner';
 import { QuantitySelector } from './QuantitySelector';
@@ -109,21 +109,21 @@ export const ShoppingCart = ({
     const receipt = await processTransaction(paymentMethod, discountAmount);
     if (receipt) {
       try {
-        // Check if already connected, if not try to connect
-        if (!hybridThermalPrinter.isConnected()) {
+        // Hubungkan ke printer Bluetooth
+        if (!bluetoothPrinter.isConnected()) {
           toast.info('Menghubungkan ke printer Bluetooth...');
-          const connected = await hybridThermalPrinter.connect();
+          const connected = await bluetoothPrinter.connect();
           
           if (!connected) {
             toast.error('Gagal terhubung ke printer Bluetooth. Periksa koneksi dan coba lagi.');
             return;
           }
           
-          toast.success(`Terhubung ke printer via ${hybridThermalPrinter.getPlatformInfo()}`);
+          toast.success(`Terhubung ke printer via ${bluetoothPrinter.getPlatform()}`);
         }
 
         const thermalContent = formatThermalReceipt(receipt, formatPrice);
-        const success = await hybridThermalPrinter.print(thermalContent);
+        const success = await bluetoothPrinter.print(thermalContent);
         
         if (success) {
           toast.success('Nota berhasil dicetak via Bluetooth!');
