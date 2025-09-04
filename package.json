@@ -11,6 +11,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@capacitor-community/bluetooth-le": "^7.1.1",
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3",
+    "@capacitor/ios": "^7.4.3",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-alert-dialog": "^1.1.14",
@@ -39,11 +43,12 @@
     "@radix-ui/react-toggle": "^1.1.9",
     "@radix-ui/react-toggle-group": "^1.1.10",
     "@radix-ui/react-tooltip": "^1.2.7",
+    "@supabase/supabase-js": "^2.57.0",
     "@tanstack/react-query": "^5.83.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
-    "date-fns": "^3.6.0",
+    "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.462.0",
@@ -62,6 +67,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@capacitor/cli": "^7.4.3",
     "@eslint/js": "^9.32.0",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^22.16.5",
