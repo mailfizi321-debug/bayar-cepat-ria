@@ -65,18 +65,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signInWithUsername = async (username: string, password: string) => {
-    // Get user by username
-    const { data: profiles, error: profileError } = await supabase
+    // Get user by username from profiles table
+    const { data: profile, error: profileError } = await supabase
       .from('profiles')
-      .select('email')
-      .eq('username', username)
+      .select('user_id, display_name')
+      .eq('display_name', username)
       .single();
 
-    if (profileError || !profiles) {
+    if (profileError || !profile) {
       return { error: { message: 'Username tidak ditemukan' } };
     }
 
-    return signIn(profiles.email, password);
+    // Since we can't get email from profiles, try to sign in with username as email
+    return signIn(username, password);
   };
 
   const signOut = async () => {

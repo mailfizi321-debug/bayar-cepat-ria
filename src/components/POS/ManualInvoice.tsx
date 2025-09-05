@@ -150,7 +150,7 @@ export const ManualInvoice = ({ onCreateInvoice, formatPrice, receipts, onPrintR
       product: {
         id: item.id,
         name: item.name,
-        costPrice: 0, // No cost price for manual items
+        costPrice: item.isPhotocopy ? item.total : 0, // For photocopy, set cost = total (no profit)
         sellPrice: item.isPhotocopy ? item.total : (item.unitPrice || 0),
         stock: 0,
         category: item.isPhotocopy ? 'Fotocopy' : 'Manual',
@@ -173,7 +173,13 @@ export const ManualInvoice = ({ onCreateInvoice, formatPrice, receipts, onPrintR
       const year = String(now.getFullYear()).slice(-2);
       const dateStr = `${day}${month}${year}`;
       const counter = receipts.length + 1;
-      const invoiceId = `MNL-${counter}${dateStr}`;
+      const invoiceId = `MAN-${dateStr}-${String(counter).padStart(4, '0')}`;
+
+      // Calculate profit: only non-photocopy items contribute to profit
+      const calculatedProfit = cartItems.reduce((sum, item) => {
+        if (item.product.isPhotocopy) return sum; // Photocopy items don't contribute to profit in manual invoices
+        return sum + ((item.finalPrice || item.product.sellPrice) - item.product.costPrice) * item.quantity;
+      }, 0);
 
       receipt = {
         id: invoiceId,
@@ -181,7 +187,7 @@ export const ManualInvoice = ({ onCreateInvoice, formatPrice, receipts, onPrintR
         subtotal,
         discount: discountAmount,
         total,
-        profit: total, // All manual invoice income is profit since no cost
+        profit: calculatedProfit,
         timestamp: new Date(),
         paymentMethod
       };
@@ -197,7 +203,7 @@ export const ManualInvoice = ({ onCreateInvoice, formatPrice, receipts, onPrintR
       setDiscount(0);
       setPaymentMethod('cash');
       
-      toast.success(`Nota manual ${receipt.id} berhasil dibuat dan disimpan ke database!`);
+      toast.success(`Nota manual ${receipt.id} berhasil dibuat!`);
     }
     
     return receipt;

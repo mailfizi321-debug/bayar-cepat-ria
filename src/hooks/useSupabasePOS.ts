@@ -171,9 +171,13 @@ export const useSupabasePOS = () => {
         sum + (item.finalPrice || item.product.sellPrice) * item.quantity, 0
       );
       const total = subtotal - discount;
-      const profit = cart.reduce((sum, item) => 
-        sum + ((item.finalPrice || item.product.sellPrice) - item.product.costPrice) * item.quantity, 0
-      );
+      // Calculate profit properly - for manual transactions, photocopy items should not contribute to profit
+      const profit = cart.reduce((sum, item) => {
+        if (isManual && item.product.isPhotocopy) {
+          return sum; // Photocopy items in manual invoices don't contribute to profit
+        }
+        return sum + ((item.finalPrice || item.product.sellPrice) - item.product.costPrice) * item.quantity;
+      }, 0);
 
       // Generate invoice number using the new function
       const { data: invoiceNumber } = await supabase.rpc('generate_invoice_number_v2', { 

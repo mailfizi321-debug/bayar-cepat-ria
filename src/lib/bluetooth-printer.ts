@@ -1,33 +1,25 @@
 import { Capacitor } from '@capacitor/core';
 import { BleClient, BleDevice, textToDataView } from '@capacitor-community/bluetooth-le';
 
-declare global {
-  interface Navigator {
-    bluetooth?: {
-      requestDevice(options: any): Promise<BluetoothDevice>;
-    };
-  }
-}
-
-interface BluetoothDevice {
-  gatt?: BluetoothRemoteGATTServer;
+interface WebBluetoothDevice {
+  gatt?: any;
   name?: string;
   id: string;
 }
 
-interface BluetoothRemoteGATTServer {
+interface WebBluetoothRemoteGATTServer {
   connected: boolean;
-  connect(): Promise<BluetoothRemoteGATTServer>;
-  disconnect(): Promise<void>;
-  getPrimaryServices(): Promise<BluetoothRemoteGATTService[]>;
+  connect(): Promise<any>;
+  disconnect(): void;
+  getPrimaryServices(): Promise<any[]>;
 }
 
-interface BluetoothRemoteGATTService {
+interface WebBluetoothRemoteGATTService {
   uuid: string;
-  getCharacteristics(): Promise<BluetoothRemoteGATTCharacteristic[]>;
+  getCharacteristics(): Promise<any[]>;
 }
 
-interface BluetoothRemoteGATTCharacteristic {
+interface WebBluetoothRemoteGATTCharacteristic {
   uuid: string;
   properties: {
     write: boolean;
@@ -37,8 +29,8 @@ interface BluetoothRemoteGATTCharacteristic {
 }
 
 export class BluetoothPrinter {
-  private webDevice: BluetoothDevice | null = null;
-  private webCharacteristic: BluetoothRemoteGATTCharacteristic | null = null;
+  private webDevice: WebBluetoothDevice | null = null;
+  private webCharacteristic: WebBluetoothRemoteGATTCharacteristic | null = null;
   private nativeDevice: BleDevice | null = null;
   private nativeServiceUuid: string = '';
   private nativeCharacteristicUuid: string = '';
@@ -112,13 +104,13 @@ export class BluetoothPrinter {
     try {
       console.log('🌐 Menggunakan Web Bluetooth');
       
-      if (!navigator.bluetooth) {
+      if (!(navigator as any).bluetooth) {
         throw new Error('Browser tidak mendukung Web Bluetooth');
       }
 
       console.log('🔍 Scanning untuk semua device Bluetooth...');
       
-      this.webDevice = await navigator.bluetooth.requestDevice({
+      this.webDevice = await (navigator as any).bluetooth.requestDevice({
         acceptAllDevices: true,
         optionalServices: [
           '000018f0-0000-1000-8000-00805f9b34fb',
@@ -247,7 +239,7 @@ export class BluetoothPrinter {
         this.nativeServiceUuid = '';
         this.nativeCharacteristicUuid = '';
       } else if (this.webDevice?.gatt?.connected) {
-        await this.webDevice.gatt.disconnect();
+        this.webDevice.gatt.disconnect();
         this.webDevice = null;
         this.webCharacteristic = null;
       }

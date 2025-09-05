@@ -85,10 +85,10 @@ export const AddProductForm = ({ onAddProduct, onUpdateProduct, products, onClos
   };
 
   return (
-    <Card className="pos-card">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="flex items-center gap-2">
-          <Plus className="h-5 w-5" />
+    <Card className="pos-card w-full max-w-4xl mx-auto min-h-[600px]">
+      <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-primary/10 to-primary/5 border-b">
+        <CardTitle className="flex items-center gap-3 text-xl">
+          <Plus className="h-6 w-6 text-primary" />
           Tambah Produk/Layanan Baru
         </CardTitle>
         <Button variant="ghost" size="sm" onClick={onClose}>
@@ -96,16 +96,16 @@ export const AddProductForm = ({ onAddProduct, onUpdateProduct, products, onClos
         </Button>
       </CardHeader>
       
-      <CardContent>
+      <CardContent className="p-8">
         <Tabs defaultValue="product" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-4">
-            <TabsTrigger value="product">Produk</TabsTrigger>
-            <TabsTrigger value="service">Layanan</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 mb-6 h-12">
+            <TabsTrigger value="product" className="text-base">Produk</TabsTrigger>
+            <TabsTrigger value="service" className="text-base">Layanan</TabsTrigger>
           </TabsList>
           
           <TabsContent value="product">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <Label htmlFor="name">Nama Produk *</Label>
                   <Input
@@ -195,14 +195,16 @@ export const AddProductForm = ({ onAddProduct, onUpdateProduct, products, onClos
                 </div>
 
                 <div className="md:col-span-2">
-                  <Label>Jumlah Stok *</Label>
-                  <QuantitySelector
-                    quantity={stockQuantity}
-                    productName={formData.name}
-                    category={formData.category}
-                    onQuantityChange={setStockQuantity}
-                    showUnitSelector={true}
-                  />
+                  <Label className="text-base">Jumlah Stok *</Label>
+                  <div className="mt-2">
+                    <QuantitySelector
+                      quantity={stockQuantity}
+                      productName={formData.name}
+                      category={formData.category}
+                      onQuantityChange={setStockQuantity}
+                      showUnitSelector={true}
+                    />
+                  </div>
                 </div>
                 
                 <div className="flex items-center space-x-2">
@@ -219,12 +221,12 @@ export const AddProductForm = ({ onAddProduct, onUpdateProduct, products, onClos
                 </div>
               </div>
               
-              <div className="flex gap-2 pt-4">
-                <Button type="submit" className="flex-1" variant="success">
-                  <Plus className="w-4 h-4 mr-2" />
+              <div className="flex gap-4 pt-6">
+                <Button type="submit" className="flex-1 h-12 text-base" variant="default">
+                  <Plus className="w-5 h-5 mr-2" />
                   Tambah Produk
                 </Button>
-                <Button type="button" variant="outline" onClick={onClose}>
+                <Button type="button" variant="outline" className="h-12 px-8 text-base" onClick={onClose}>
                   Batal
                 </Button>
               </div>
@@ -232,8 +234,8 @@ export const AddProductForm = ({ onAddProduct, onUpdateProduct, products, onClos
           </TabsContent>
           
           <TabsContent value="service">
-            <form onSubmit={(e) => { setIsService(true); handleSubmit(e); }} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form onSubmit={(e) => { setIsService(true); handleSubmit(e); }} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <Label htmlFor="serviceName">Nama Layanan *</Label>
                   <Input
@@ -294,12 +296,12 @@ export const AddProductForm = ({ onAddProduct, onUpdateProduct, products, onClos
                 </div>
               </div>
               
-              <div className="flex gap-2 pt-4">
-                <Button type="submit" className="flex-1" variant="success">
-                  <Plus className="w-4 h-4 mr-2" />
+              <div className="flex gap-4 pt-6">
+                <Button type="submit" className="flex-1 h-12 text-base" variant="default">
+                  <Plus className="w-5 h-5 mr-2" />
                   Tambah Layanan
                 </Button>
-                <Button type="button" variant="outline" onClick={onClose}>
+                <Button type="button" variant="outline" className="h-12 px-8 text-base" onClick={onClose}>
                   Batal
                 </Button>
               </div>

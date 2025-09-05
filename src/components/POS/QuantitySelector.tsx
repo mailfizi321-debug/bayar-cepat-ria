@@ -80,6 +80,7 @@ export const QuantitySelector = ({
     <div className="space-y-3 quantity-selector">
       <div className="flex items-center gap-2">
         <Button
+          type="button"
           size="sm"
           variant="outline"
           className="h-8 w-8 p-0"
@@ -101,6 +102,7 @@ export const QuantitySelector = ({
         />
         
         <Button
+          type="button"
           size="sm"
           variant="outline"
           className="h-8 w-8 p-0"
@@ -112,6 +114,7 @@ export const QuantitySelector = ({
 
         {onRemove && (
           <Button
+            type="button"
             size="sm"
             variant="outline"
             className="h-8 w-8 p-0 ml-2 text-error hover:bg-error hover:text-error-foreground"
