@@ -14,13 +14,174 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      products: {
+        Row: {
+          barcode: string | null
+          category: string | null
+          cost_price: number
+          created_at: string
+          id: string
+          is_photocopy: boolean
+          name: string
+          sell_price: number
+          stock: number
+          updated_at: string
+        }
+        Insert: {
+          barcode?: string | null
+          category?: string | null
+          cost_price?: number
+          created_at?: string
+          id?: string
+          is_photocopy?: boolean
+          name: string
+          sell_price?: number
+          stock?: number
+          updated_at?: string
+        }
+        Update: {
+          barcode?: string | null
+          category?: string | null
+          cost_price?: number
+          created_at?: string
+          id?: string
+          is_photocopy?: boolean
+          name?: string
+          sell_price?: number
+          stock?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      receipt_items: {
+        Row: {
+          cost_price: number
+          created_at: string
+          final_price: number | null
+          id: string
+          product_id: string | null
+          product_name: string
+          profit: number
+          quantity: number
+          receipt_id: string
+          total_price: number
+          unit_price: number
+        }
+        Insert: {
+          cost_price?: number
+          created_at?: string
+          final_price?: number | null
+          id?: string
+          product_id?: string | null
+          product_name: string
+          profit?: number
+          quantity?: number
+          receipt_id: string
+          total_price?: number
+          unit_price?: number
+        }
+        Update: {
+          cost_price?: number
+          created_at?: string
+          final_price?: number | null
+          id?: string
+          product_id?: string | null
+          product_name?: string
+          profit?: number
+          quantity?: number
+          receipt_id?: string
+          total_price?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "receipt_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "receipt_items_receipt_id_fkey"
+            columns: ["receipt_id"]
+            isOneToOne: false
+            referencedRelation: "receipts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      receipts: {
+        Row: {
+          created_at: string
+          discount: number
+          id: string
+          invoice_number: string | null
+          payment_method: string | null
+          profit: number
+          subtotal: number
+          total: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          discount?: number
+          id?: string
+          invoice_number?: string | null
+          payment_method?: string | null
+          profit?: number
+          subtotal?: number
+          total?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          discount?: number
+          id?: string
+          invoice_number?: string | null
+          payment_method?: string | null
+          profit?: number
+          subtotal?: number
+          total?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_invoice_number_v2: {
+        Args: { is_manual?: boolean }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
