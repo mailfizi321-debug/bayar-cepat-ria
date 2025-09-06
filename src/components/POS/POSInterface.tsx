@@ -481,7 +481,6 @@ Profit: ${formatPrice(receipt.profit)}
               onCreateInvoice={handleManualInvoice}
               formatPrice={formatPrice}
               receipts={receipts}
-              onPrintReceipt={handlePrintThermal}
               products={products}
               processManualTransaction={processManualTransaction}
             />
