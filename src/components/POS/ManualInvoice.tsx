@@ -203,7 +203,9 @@ export const ManualInvoice = ({ onCreateInvoice, formatPrice, receipts, onPrintR
       setDiscount(0);
       setPaymentMethod('cash');
       
-      toast.success(`Nota manual ${receipt.id} berhasil dibuat!`);
+      toast.success(`Nota manual berhasil dibuat!`);
+    } else {
+      toast.error('Gagal memproses transaksi manual');
     }
     
     return receipt;

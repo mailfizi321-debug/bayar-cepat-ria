@@ -156,8 +156,7 @@ export const POSInterface = () => {
   };
 
   const handleManualInvoice = (receipt: ReceiptType) => {
-    // Add to manual receipts and view the created receipt
-    addManualReceipt(receipt);
+    // Set the created receipt and navigate to receipt tab
     setSelectedReceipt(receipt);
     setCurrentTab('receipt');
   };
